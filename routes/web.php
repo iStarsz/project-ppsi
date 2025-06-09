@@ -4,12 +4,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/debug', function () {
-    throw new \Exception("Ini TEST ERROR - Jika kamu lihat ini, debug berfungsi");
-});
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/public/object-detail/tmp', function () {
