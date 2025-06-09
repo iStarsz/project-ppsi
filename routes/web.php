@@ -4,6 +4,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/debug', function () {
+    throw new \Exception("Ini TEST ERROR - Jika kamu lihat ini, debug berfungsi");
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,17 +31,17 @@ Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login
 Route::post('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 // Admin dashboard dengan middleware auth
-Route::prefix('admin')->name('admin.')->middleware(AdminAuthenticate::class)->group(function() {
+Route::prefix('admin')->name('admin.')->middleware(AdminAuthenticate::class)->group(function () {
     Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
 
-     // CRUD Admin by Super Admin
+    // CRUD Admin by Super Admin
     Route::get('manage-admins', [SuperAdminManageAdminController::class, 'index'])->name('manage-admins.index');
     Route::get('manage-admins/create', [SuperAdminManageAdminController::class, 'create'])->name('manage-admins.create');
     Route::post('manage-admins', [SuperAdminManageAdminController::class, 'store'])->name('manage-admins.store');
     Route::get('manage-admins/{id}/edit', [SuperAdminManageAdminController::class, 'edit'])->name('manage-admins.edit');
     Route::put('manage-admins/{id}', [SuperAdminManageAdminController::class, 'update'])->name('manage-admins.update');
     Route::delete('manage-admins/{id}', [SuperAdminManageAdminController::class, 'destroy'])->name('manage-admins.destroy');
-   
+
     // CRUD Category
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create'); // Perbaiki sini
@@ -69,6 +73,6 @@ Route::get('/object/{id}', [PublicObjectController::class, 'show'])->name('objec
 
 
 // Route untuk halaman error saat objek tidak ditemukan
-Route::get('/object/object-not-found', function() {
+Route::get('/object/object-not-found', function () {
     return view('public.object_not_found');
 })->name('object.not_found');
