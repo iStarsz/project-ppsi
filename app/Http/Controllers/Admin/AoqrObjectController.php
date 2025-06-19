@@ -40,7 +40,7 @@ class AoqrObjectController extends Controller
         return view('admin.aoqr_objects.create', compact('categories'));
     }
 
-    
+
 
 
     public function store(Request $request)
@@ -79,7 +79,7 @@ class AoqrObjectController extends Controller
         return redirect()->route('admin.aoqr_objects.index')->with('success', 'Aoqr Object created successfully');
     }
 
-    
+
 
 
     // Fungsi untuk menampilkan form edit AoqrObject
@@ -155,7 +155,7 @@ class AoqrObjectController extends Controller
 
 
 
-   // Fungsi untuk menghapus AoqrObject
+    // Fungsi untuk menghapus AoqrObject
     public function destroy($id)
     {
         $aoqrObject = AoqrObject::find($id);
@@ -166,7 +166,7 @@ class AoqrObjectController extends Controller
 
         // Mengambil gambar-gambar yang terkait dengan AoqrObject
         $images = json_decode($aoqrObject->image_url, true);
-        
+
         // Loop untuk menghapus gambar-gambar yang terkait
         foreach ($images as $imageUrl) {
             // Mendapatkan path gambar dari URL (tanpa 'asset()')
@@ -218,11 +218,11 @@ class AoqrObjectController extends Controller
 
         // Generate QR code dengan ukuran 300x300 dan margin (padding) 30
         $qrCode = QrCode::size(300)   // Ukuran QR Code
-                        ->margin(3)  // Menambahkan padding/margin sekitar QR Code
-                        ->generate($hardcodedUrl);
+            ->margin(3)  // Menambahkan padding/margin sekitar QR Code
+            ->generate($hardcodedUrl);
 
         // Tentukan nama file untuk QR Code
-        $qrCodeFileName = 'qr_' . $aoqrObject->name_english . '.svg';
+        $qrCodeFileName = 'qr_' . $aoqrObject->name_object . '.svg';
 
         // Simpan file QR Code ke folder public/images/qrcode
         file_put_contents(public_path('images/qrcode/' . $qrCodeFileName), $qrCode);
@@ -233,5 +233,4 @@ class AoqrObjectController extends Controller
 
         return redirect()->route('admin.aoqr_objects.view_qrcode', $aoqrObject->id)->with('success', 'QR Code generated successfully');
     }
-
 }
